@@ -1,65 +1,67 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>Moneyline Spread Analyzer</title>
-<style>
-  :root{
-    --bg:#f4f7fb; --card:#ffffff; --ink:#122033; --muted:#5f6f82;
-    --blue:#1f4e78; --blue2:#dbe9f6; --green:#e5f4e8; --gold:#fff3cd;
-    --border:#cfd9e6;
-  }
-  *{box-sizing:border-box}
-  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink)}
-  .wrap{max-width:980px;margin:0 auto;padding:16px}
-  h1{font-size:24px;margin:4px 0 8px}
-  .sub{color:var(--muted);font-size:14px;line-height:1.4;margin-bottom:14px}
-  .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:14px;box-shadow:0 2px 10px rgba(16,38,64,.05)}
-  textarea{width:100%;min-height:290px;border:1px solid var(--border);border-radius:12px;padding:12px;font-size:16px;line-height:1.35;resize:vertical;background:#fff}
-  .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
-  button{appearance:none;border:0;border-radius:12px;padding:13px 16px;font-size:16px;font-weight:700;cursor:pointer}
-  .primary{background:var(--blue);color:#fff;flex:1;min-width:180px}
-  .secondary{background:var(--blue2);color:var(--blue);min-width:120px}
-  .tiny{font-size:12px;color:var(--muted);margin-top:8px}
-  .summary-grid{display:grid;grid-template-columns:1fr;gap:10px}
-  .summary{padding:12px;border-radius:12px;background:var(--green);border:1px solid #bfdcc4}
-  .summary b{display:block;margin-bottom:4px}
-  .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
-  table{width:100%;border-collapse:collapse;min-width:900px}
-  th,td{border-bottom:1px solid var(--border);padding:10px 8px;text-align:left;font-size:13px;vertical-align:top}
-  th{background:var(--blue);color:#fff;position:sticky;top:0}
-  tr:nth-child(even) td{background:#f8fbff}
-  .flag{background:var(--gold);font-weight:700}
-  .error{background:#fdeaea;border:1px solid #e4aaaa;color:#7c1d1d;padding:10px;border-radius:10px;display:none}
-  .settings{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-  label{font-size:13px;color:var(--muted)}
-  input{width:100%;margin-top:5px;padding:10px;border:1px solid var(--border);border-radius:10px;font-size:16px}
-  @media(min-width:700px){
-    .summary-grid{grid-template-columns:1fr 1fr}
-  }
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#17365d">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="ML Analyzer">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icon-180.png">
+  <title>Moneyline Spread Analyzer</title>
+  <style>
+    :root{
+      --bg:#f3f6fa; --card:#fff; --ink:#142033; --muted:#617084;
+      --navy:#17365d; --blue:#2f75b5; --line:#d4deea; --soft:#eaf2f9;
+      --green:#e6f3e8; --gold:#fff4cf; --red:#fdeaea;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;background:var(--bg);color:var(--ink);
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+    body{padding-bottom:calc(24px + env(safe-area-inset-bottom))}
+    header{background:var(--navy);color:white;padding:calc(18px + env(safe-area-inset-top)) 16px 18px}
+    header h1{margin:0;font-size:24px}
+    header p{margin:6px 0 0;font-size:14px;opacity:.9;line-height:1.4}
+    main{max-width:980px;margin:auto;padding:14px}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:14px;
+      box-shadow:0 2px 10px rgba(17,40,70,.05)}
+    textarea{width:100%;min-height:330px;border:1px solid var(--line);border-radius:12px;padding:12px;
+      font-size:16px;line-height:1.38;resize:vertical;background:#fff}
+    button{border:0;border-radius:12px;padding:13px 16px;font-size:16px;font-weight:750}
+    .primary{width:100%;background:var(--blue);color:white;margin-top:10px}
+    .secondary{background:var(--soft);color:var(--navy)}
+    .button-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+    .button-row button{flex:1;min-width:130px}
+    .notice,.error{display:none;padding:11px;border-radius:10px;margin-top:10px;font-size:14px;line-height:1.4}
+    .notice{background:var(--green);border:1px solid #bed7c3}
+    .error{background:var(--red);border:1px solid #e5b7b7;color:#7d2222}
+    .summary-grid{display:grid;grid-template-columns:1fr;gap:10px}
+    .summary{background:var(--green);border:1px solid #c5ddc8;border-radius:12px;padding:12px;line-height:1.45}
+    .summary h3{margin:0 0 6px;font-size:17px}
+    .compare{background:var(--gold);border:1px solid #eadb98;border-radius:12px;padding:12px;line-height:1.45;margin-top:10px}
+    .section-title{margin:0 0 10px;font-size:19px}
+    .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:12px;border:1px solid var(--line)}
+    table{border-collapse:collapse;width:100%;min-width:930px;background:white}
+    th,td{padding:10px 8px;border-bottom:1px solid var(--line);font-size:13px;text-align:left;vertical-align:top}
+    th{background:var(--navy);color:white;position:sticky;top:0;z-index:1}
+    tr:nth-child(even) td{background:#f8fbff}
+    .tag{display:inline-block;border-radius:999px;padding:4px 8px;background:var(--soft);font-size:12px;font-weight:700}
+    .small{font-size:12px;color:var(--muted);line-height:1.45}
+    details{margin-top:10px}
+    summary{font-weight:700;color:var(--navy)}
+    @media(min-width:760px){.summary-grid{grid-template-columns:1fr 1fr}}
+  </style>
 </head>
 <body>
-<div class="wrap">
-  <h1>Moneyline-to-Spread Analyzer</h1>
-  <div class="sub">Paste the data exactly like a sportsbook update list. The tool reads each timestamp, calculates an expected spread, applies the double-digit ÷2 rule, and compares each team’s best odds timestamp.</div>
+<header>
+  <h1>Moneyline Spread Analyzer</h1>
+  <p>Paste sportsbook updates exactly as you paste them into ChatGPT.</p>
+</header>
 
-  <div class="card">
-    <div class="settings">
-      <label>Double-digit divisor
-        <input id="divisor" type="number" value="2" step="0.5" min="1" />
-      </label>
-      <label>Double-digit starts at
-        <input id="threshold" type="number" value="10" step="0.5" min="1" />
-      </label>
-    </div>
-  </div>
-
-  <div class="card">
-    <textarea id="input" placeholder="Paste data here...
-
-Update (ET)
+<main>
+  <section class="card">
+    <textarea id="input" placeholder="Update (ET)
 Game
 Line
 Jul 18
@@ -74,170 +76,206 @@ WAS
 GS
 +340
 -450"></textarea>
-    <div id="error" class="error"></div>
-    <div class="row">
-      <button class="primary" onclick="analyze()">Analyze Data</button>
+
+    <button class="primary" onclick="analyze()">Analyze Data</button>
+
+    <div class="button-row">
       <button class="secondary" onclick="loadExample()">Load Example</button>
       <button class="secondary" onclick="clearAll()">Clear</button>
     </div>
-    <div class="tiny">Best odds means the highest American-odds number for that team: for example, +340 is better than +300, and -375 is better than -450.</div>
-  </div>
 
-  <div id="results" style="display:none">
-    <div class="card">
-      <div class="summary-grid" id="summary"></div>
-    </div>
-    <div class="card">
-      <div class="row" style="margin-top:0;margin-bottom:10px">
-        <button class="secondary" onclick="copySummary()">Copy Summary</button>
-        <button class="secondary" onclick="downloadCSV()">Download CSV</button>
+    <div id="error" class="error"></div>
+    <div id="installNotice" class="notice"></div>
+
+    <details>
+      <summary>Calculation rule used</summary>
+      <div class="small" style="margin-top:8px">
+        The tool converts each moneyline to a raw expected spread using the built-in custom calibration.
+        When the raw expected spread is 10.0 or higher, the tool divides it by 2.
+        Best odds means the highest American-odds number for that team.
       </div>
+    </details>
+  </section>
+
+  <section id="results" style="display:none">
+    <div class="card">
+      <h2 class="section-title">Best Odds Timestamps</h2>
+      <div id="summary" class="summary-grid"></div>
+      <div id="comparison" class="compare"></div>
+    </div>
+
+    <div class="card">
+      <h2 class="section-title">Chronological Analysis</h2>
       <div class="table-wrap">
         <table>
           <thead>
             <tr>
-              <th>Timestamp</th><th>Team A</th><th>Team B</th><th>Team A ML</th><th>Team B ML</th>
-              <th>Team A Expected</th><th>Team B Expected</th><th>Consensus</th><th>Movement</th><th>Analysis</th>
+              <th>Timestamp</th>
+              <th>Team A ML</th>
+              <th>Team B ML</th>
+              <th>Team A Expected Spread</th>
+              <th>Team B Expected Spread</th>
+              <th>Consensus</th>
+              <th>Movement</th>
+              <th>Analysis</th>
             </tr>
           </thead>
           <tbody id="tbody"></tbody>
         </table>
       </div>
     </div>
-  </div>
-</div>
+  </section>
+</main>
 
 <script>
-const dogCal = [
-  [100,3],[150,6],[200,9],[250,13],[290,16.5],[300,17],[310,18],[325,19],[340,20],[400,23],[500,27]
+const underdogCalibration = [
+  [100,3],[150,6],[200,9],[250,13],[290,16.5],[300,17],
+  [310,18],[320,18.5],[325,19],[340,20],[400,23],[500,27]
 ];
-const favCal = [
-  [100,3],[150,5],[200,7],[250,9],[300,11],[350,15],[375,17],[400,18],[426,19],[450,20],[500,22]
+const favoriteCalibration = [
+  [100,3],[150,5],[200,7],[250,9],[300,11],[350,15],
+  [375,17],[400,18],[426,19],[450,20],[500,22]
 ];
 
-let lastRows = [];
-let lastSummaryText = "";
-
-function lookup(val, table){
-  let out = table[0][1];
+function lookup(value, table){
+  let result = table[0][1];
   for(const [x,y] of table){
-    if(val >= x) out = y; else break;
+    if(value >= x) result = y;
+    else break;
   }
-  return out;
+  return result;
 }
-function expectedFromML(ml){
-  const raw = ml > 0 ? lookup(ml,dogCal) : lookup(Math.abs(ml),favCal);
-  const threshold = Number(document.getElementById('threshold').value)||10;
-  const divisor = Number(document.getElementById('divisor').value)||2;
-  return {raw, adjusted: raw >= threshold ? raw/divisor : raw};
+
+function expectedSpreadFromMoneyline(ml){
+  const raw = ml > 0
+    ? lookup(ml, underdogCalibration)
+    : lookup(Math.abs(ml), favoriteCalibration);
+  return {raw, adjusted: raw >= 10 ? raw / 2 : raw};
 }
-function cleanLines(text){
-  return text.split(/\r?\n/).map(s=>s.trim()).filter(Boolean)
-    .filter(s=>!/^update/i.test(s) && !/^game$/i.test(s) && !/^line$/i.test(s));
+
+function sanitizeLines(text){
+  return text.split(/\r?\n/)
+    .map(x=>x.trim())
+    .filter(Boolean)
+    .filter(x=>!/^update/i.test(x) && !/^game$/i.test(x) && !/^line$/i.test(x));
 }
-function isDate(s){ return /^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+\d{1,2}$/i.test(s); }
-function isTime(s){ return /^\d{1,2}:\d{2}$/.test(s); }
-function isOdds(s){ return /^[+-]\d+$/.test(s); }
-function parseData(text){
-  const lines = cleanLines(text);
-  const rows = [];
+function isDate(x){return /^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+\d{1,2}$/i.test(x)}
+function isTime(x){return /^\d{1,2}:\d{2}$/.test(x)}
+function isOdds(x){return /^[+-]\d+$/.test(x)}
+
+function parseBlocks(text){
+  const lines=sanitizeLines(text), rows=[];
   for(let i=0;i<lines.length;){
-    if(isDate(lines[i]) && isTime(lines[i+1]) && lines[i+2] && lines[i+3] && isOdds(lines[i+4]) && isOdds(lines[i+5])){
+    if(isDate(lines[i]) && isTime(lines[i+1]) && lines[i+2] && lines[i+3]
+      && isOdds(lines[i+4]) && isOdds(lines[i+5])){
       rows.push({
-        date:lines[i], time:lines[i+1], teamA:lines[i+2], teamB:lines[i+3],
+        date:lines[i], time:lines[i+1],
+        teamA:lines[i+2], teamB:lines[i+3],
         mlA:Number(lines[i+4]), mlB:Number(lines[i+5])
       });
-      i += 6;
-    }else{
-      i++;
-    }
+      i+=6;
+    }else i++;
   }
-  return rows.reverse(); // source usually newest first; analyze oldest to newest
+  return rows.reverse();
 }
-function fmtOdds(n){ return n>0 ? `+${n}` : `${n}`; }
-function fmtSpread(team, n, favored){
-  if(favored) return `${team} -${n.toFixed(2)}`;
-  return `${team} +${n.toFixed(2)}`;
+
+function fmtOdds(x){return x>0?`+${x}`:`${x}`}
+function fmt(x){return Number(x).toFixed(2)}
+function expectedLabel(team, value, isFavorite){
+  return isFavorite ? `${team} -${fmt(value)}` : `${team} +${fmt(value)}`;
 }
+
 function analyze(){
-  const error = document.getElementById('error');
-  error.style.display='none';
-  const rows = parseData(document.getElementById('input').value);
+  const error=document.getElementById("error");
+  error.style.display="none";
+  const rows=parseBlocks(document.getElementById("input").value);
   if(!rows.length){
-    error.textContent='No complete timestamp blocks were found. Each block should contain date, time, Team A, Team B, Team A moneyline, and Team B moneyline.';
-    error.style.display='block'; return;
+    error.textContent="No complete timestamp blocks were found. Each update needs date, time, Team A, Team B, Team A moneyline, and Team B moneyline.";
+    error.style.display="block";
+    return;
   }
-  let prevConsensus = null;
-  rows.forEach((r,idx)=>{
-    const a=expectedFromML(r.mlA), b=expectedFromML(r.mlB);
-    r.expA=a.adjusted; r.expB=b.adjusted; r.rawA=a.raw; r.rawB=b.raw;
-    r.favorite = r.mlA < r.mlB ? r.teamA : r.teamB;
+
+  let prior=null;
+  rows.forEach((r,index)=>{
+    const a=expectedSpreadFromMoneyline(r.mlA);
+    const b=expectedSpreadFromMoneyline(r.mlB);
+    r.rawA=a.raw; r.rawB=b.raw;
+    r.expA=a.adjusted; r.expB=b.adjusted;
+    r.favorite=r.mlA<r.mlB?r.teamA:r.teamB;
     r.consensus=(r.expA+r.expB)/2;
-    if(prevConsensus===null) r.movement='Opening timestamp';
-    else if(r.consensus>prevConsensus) r.movement=`Favorite strengthened by ${(r.consensus-prevConsensus).toFixed(2)}`;
-    else if(r.consensus<prevConsensus) r.movement=`Favorite eased by ${(prevConsensus-r.consensus).toFixed(2)}`;
-    else r.movement='No spread change';
-    r.analysis=`${r.favorite} favored. ${r.movement}. ${r.teamA} estimate ${r.expA.toFixed(2)}, ${r.teamB} estimate ${r.expB.toFixed(2)}.`;
-    prevConsensus=r.consensus;
+
+    if(prior===null) r.movement="Opening timestamp";
+    else if(r.consensus>prior) r.movement=`Favorite strengthened by ${fmt(r.consensus-prior)}`;
+    else if(r.consensus<prior) r.movement=`Favorite eased by ${fmt(prior-r.consensus)}`;
+    else r.movement="No expected-spread change";
+
+    r.analysis=`${r.favorite} was favored. ${r.movement}. ${r.teamA} projected ${fmt(r.expA)} and ${r.teamB} projected ${fmt(r.expB)}.`;
+    prior=r.consensus;
   });
-  lastRows=rows;
+
   render(rows);
 }
+
 function render(rows){
   const teamA=rows[0].teamA, teamB=rows[0].teamB;
   const bestA=Math.max(...rows.map(r=>r.mlA));
   const bestB=Math.max(...rows.map(r=>r.mlB));
-  const bestRowsA=rows.filter(r=>r.mlA===bestA);
-  const bestRowsB=rows.filter(r=>r.mlB===bestB);
-  const firstA=bestRowsA[0], firstB=bestRowsB[0];
+  const matchesA=rows.filter(r=>r.mlA===bestA);
+  const matchesB=rows.filter(r=>r.mlB===bestB);
+  const a=matchesA[0], b=matchesB[0];
 
-  const timesA=bestRowsA.map(r=>`${r.date} ${r.time}`).join(', ');
-  const timesB=bestRowsB.map(r=>`${r.date} ${r.time}`).join(', ');
+  document.getElementById("summary").innerHTML=`
+    <div class="summary">
+      <h3>${teamA}</h3>
+      <div><strong>Best odds:</strong> ${fmtOdds(bestA)}</div>
+      <div><strong>Timestamp:</strong> ${matchesA.map(x=>`${x.date} ${x.time}`).join(", ")}</div>
+      <div><strong>Expected spread:</strong> ${expectedLabel(teamA,a.expA,a.favorite===teamA)}</div>
+      <div><strong>Consensus at timestamp:</strong> ${a.favorite} -${fmt(a.consensus)}</div>
+    </div>
+    <div class="summary">
+      <h3>${teamB}</h3>
+      <div><strong>Best odds:</strong> ${fmtOdds(bestB)}</div>
+      <div><strong>Timestamp:</strong> ${matchesB.map(x=>`${x.date} ${x.time}`).join(", ")}</div>
+      <div><strong>Expected spread:</strong> ${expectedLabel(teamB,b.expB,b.favorite===teamB)}</div>
+      <div><strong>Consensus at timestamp:</strong> ${b.favorite} -${fmt(b.consensus)}</div>
+    </div>`;
 
-  document.getElementById('summary').innerHTML = `
-    <div class="summary"><b>${teamA} best odds</b>${fmtOdds(bestA)} at ${timesA}<br>Expected spread: ${firstA.expA.toFixed(2)}<br>Consensus: ${firstA.consensus.toFixed(2)}</div>
-    <div class="summary"><b>${teamB} best odds</b>${fmtOdds(bestB)} at ${timesB}<br>Expected spread: ${firstB.expB.toFixed(2)}<br>Consensus: ${firstB.consensus.toFixed(2)}</div>
-  `;
-  lastSummaryText =
-`${teamA} best odds: ${fmtOdds(bestA)} at ${timesA}. Expected spread ${firstA.expA.toFixed(2)}; consensus ${firstA.consensus.toFixed(2)}.
-${teamB} best odds: ${fmtOdds(bestB)} at ${timesB}. Expected spread ${firstB.expB.toFixed(2)}; consensus ${firstB.consensus.toFixed(2)}.
-Difference between best-timestamp consensus spreads: ${Math.abs(firstA.consensus-firstB.consensus).toFixed(2)} points.`;
+  const difference=Math.abs(a.consensus-b.consensus);
+  let comparisonText;
+  if(difference===0){
+    comparisonText=`Both teams' best-odds timestamps produced the same consensus expected spread of ${fmt(a.consensus)} points.`;
+  }else{
+    const stronger=a.consensus>b.consensus?`${teamA}'s best-odds timestamp`:`${teamB}'s best-odds timestamp`;
+    comparisonText=`${stronger} had the larger consensus expected spread. The difference between the two best-odds timestamps was ${fmt(difference)} points.`;
+  }
+  document.getElementById("comparison").innerHTML=`<strong>Comparison:</strong> ${comparisonText}`;
 
-  document.getElementById('tbody').innerHTML = rows.map(r=>{
+  document.getElementById("tbody").innerHTML=rows.map(r=>{
     const aFav=r.favorite===r.teamA, bFav=r.favorite===r.teamB;
     return `<tr>
-      <td>${r.date} ${r.time}</td><td>${r.teamA}</td><td>${r.teamB}</td>
-      <td>${fmtOdds(r.mlA)}</td><td>${fmtOdds(r.mlB)}</td>
-      <td>${fmtSpread(r.teamA,r.expA,aFav)}</td><td>${fmtSpread(r.teamB,r.expB,bFav)}</td>
-      <td>${r.favorite} -${r.consensus.toFixed(2)}</td><td>${r.movement}</td><td>${r.analysis}</td>
+      <td>${r.date} ${r.time}</td>
+      <td>${r.teamA} ${fmtOdds(r.mlA)}</td>
+      <td>${r.teamB} ${fmtOdds(r.mlB)}</td>
+      <td>${expectedLabel(r.teamA,r.expA,aFav)}</td>
+      <td>${expectedLabel(r.teamB,r.expB,bFav)}</td>
+      <td><span class="tag">${r.favorite} -${fmt(r.consensus)}</span></td>
+      <td>${r.movement}</td>
+      <td>${r.analysis}</td>
     </tr>`;
-  }).join('');
-  document.getElementById('results').style.display='block';
-  window.scrollTo({top:document.getElementById('results').offsetTop-10,behavior:'smooth'});
+  }).join("");
+
+  document.getElementById("results").style.display="block";
+  window.scrollTo({top:document.getElementById("results").offsetTop-10,behavior:"smooth"});
 }
-async function copySummary(){
-  if(!lastSummaryText) return;
-  await navigator.clipboard.writeText(lastSummaryText);
-  alert('Summary copied.');
-}
-function downloadCSV(){
-  if(!lastRows.length) return;
-  const headers=['Timestamp','Team A','Team B','Team A ML','Team B ML','Team A Expected','Team B Expected','Consensus','Movement','Analysis'];
-  const data=lastRows.map(r=>[
-    `${r.date} ${r.time}`,r.teamA,r.teamB,r.mlA,r.mlB,r.expA.toFixed(2),r.expB.toFixed(2),
-    r.consensus.toFixed(2),r.movement,r.analysis
-  ]);
-  const csv=[headers,...data].map(row=>row.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
-  const blob=new Blob([csv],{type:'text/csv'});
-  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='moneyline_spread_analysis.csv'; a.click();
-  URL.revokeObjectURL(a.href);
-}
+
 function clearAll(){
-  document.getElementById('input').value=''; document.getElementById('results').style.display='none';
-  document.getElementById('error').style.display='none'; lastRows=[]; lastSummaryText='';
+  document.getElementById("input").value="";
+  document.getElementById("results").style.display="none";
+  document.getElementById("error").style.display="none";
 }
+
 function loadExample(){
-document.getElementById('input').value=`Update (ET)
+  document.getElementById("input").value=`Update (ET)
 Game
 Line
 Jul 18
@@ -306,6 +344,18 @@ WAS
 GS
 +300
 -375`;
+}
+
+if("serviceWorker" in navigator){
+  window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js"));
+}
+const notice=document.getElementById("installNotice");
+if(window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone){
+  notice.textContent="Installed app mode is active.";
+  notice.style.display="block";
+}else{
+  notice.innerHTML="<strong>Install on iPhone:</strong> open this site in Safari, tap Share, then tap Add to Home Screen.";
+  notice.style.display="block";
 }
 </script>
 </body>
